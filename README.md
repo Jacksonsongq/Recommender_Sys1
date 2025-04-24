@@ -1,4 +1,4 @@
-# Homework 2 – Restaurant Recommender Systems (Northwestern STAT XXX)
+# Homework 2 – Restaurant Recommender Systems (Northwestern STAT 415)
 
 A short, hands-on project that walks through **four classic approaches** to building a
 restaurant recommendation engine:
@@ -13,5 +13,4 @@ accompanying **Python code** that generated those results.
 
 ---
 
-## 📁  Repository Layout
 

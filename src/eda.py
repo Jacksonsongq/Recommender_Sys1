@@ -80,7 +80,7 @@ num_cols = list(set(FEATURES) - set(cat_cols))
 # OneHotEncoder – new & old scikit-learn compatibility
 try:
     ohe = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
-except TypeError:          # sklearn < 1.4
+except TypeError:          
     ohe = OneHotEncoder(sparse=False, handle_unknown="ignore")
 
 prep = ColumnTransformer([
@@ -118,12 +118,12 @@ for algo, ctor in [("kmeans", KMeans), ("agglo", AgglomerativeClustering)]:
         ))
 
 # --- DBSCAN parameter grid ---
-for eps in (8, 10, 12):
-    for ms in (5, 10):
+for eps in (4, 6, 8, 10, 12):
+    for ms in (3, 5, 8):
         db = DBSCAN(eps=eps, min_samples=ms).fit(X)
         labels = db.labels_
         k = len(set(labels)) - (1 if -1 in labels else 0)
-        if k <= 1:    # ignore trivial clustering
+        if k <= 1:    
             continue
         sil = silhouette_score(X, labels)
         work["tmp"] = labels
@@ -139,6 +139,34 @@ for eps in (8, 10, 12):
 
 res = (pd.DataFrame(records)
          .sort_values(["algo", "silhouette"], ascending=[True, False]))
-display(res)                         # quick inspection
+display(res)                         
 res.to_csv("cluster_scan_results.csv", index=False)
 print("Grid search finished – results saved to cluster_scan_results.csv")
+
+# --------- Profile Clusters for KMeans (k=2 and k=3) ---------
+def profile_kmeans(X, df_work, k_list=[2, 3]):
+    for k in k_list:
+        print(f"\n=== KMeans clustering: k = {k} ===")
+        
+        kmeans = KMeans(n_clusters=k, random_state=42, n_init="auto")
+        labels = kmeans.fit_predict(X)
+        
+        df_work["cluster"] = labels
+        
+        # Only use columns that exist
+        profile_cols = ["Rating", "Birth Year", "Weight (lb)"]
+        available_cols = [col for col in profile_cols if col in df_work.columns]
+        
+        profile = (df_work
+                   .groupby("cluster")[available_cols]
+                   .mean()
+                   .round(2))
+        
+        display(profile)
+        profile.to_csv(f"profile_kmeans_k{k}.csv")
+
+# re-transform before calling
+X_for_kmeans = prep.transform(work[FEATURES])
+profile_kmeans(X_for_kmeans, work.copy())
+
+

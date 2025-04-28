@@ -27,7 +27,7 @@ print(f"[INFO] merged DataFrame shape: {df.shape}")
 missing = df.isna().sum().sort_values(ascending=False)
 missing = missing[missing > 0]
 if missing.empty:
-    print("✅ No missing values detected")
+    print("No missing values detected")
 else:
     pct = (missing / len(df)).round(3)
     print("=== Top 15 columns by missing count ===")
@@ -141,4 +141,4 @@ res = (pd.DataFrame(records)
          .sort_values(["algo", "silhouette"], ascending=[True, False]))
 display(res)                         # quick inspection
 res.to_csv("cluster_scan_results.csv", index=False)
-print("🎉  Grid search finished – results saved to cluster_scan_results.csv")
+print("Grid search finished – results saved to cluster_scan_results.csv")

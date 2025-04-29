@@ -9,7 +9,7 @@ This project explores four fundamental approaches to building a restaurant recom
 
 ---
 
-## 📌 Approaches Implemented
+## Approaches Implemented
 
 1. **Exploratory Data Analysis (EDA)**  
    Understand user demographics, restaurant metadata, and rating distributions.  
@@ -29,7 +29,7 @@ This project explores four fundamental approaches to building a restaurant recom
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 Recommender_Sys1/
 ├── data/                      # Raw data files
@@ -45,6 +45,27 @@ Recommender_Sys1/
 │   └── similarity_metrics.py
 ├── main.py        # Run full pipeline (for demo)
 ├── README.md                  # Project documentation
+
+
+### Missing Value Ratio
+
+<img src="figs/missing_values.png" width="500"/>
+
+### Shrinkage Impact
+
+<img src="figs/shrinkage_impact.png" width="500"/>
+
+### Recommendation – Willie Jacobsen
+
+**Top 10 (Euclidean distance)**  
+<img src="figs/recommend_euclidean_willie.png" width="500"/>
+
+**Top 10 (Cosine distance)**  
+<img src="figs/recommend_cosine_willie.png" width="500"/>
+
+### TF-IDF Cosine Distance Heatmap
+
+<img src="figs/tfidf_distance_heatmap.png" width="500"/>
 
 
 

@@ -1,4 +1,3 @@
-# ===== Evanston Restaurant Reviews – Complete EDA (Q1–Q3) =====
 import os, pandas as pd, numpy as np, matplotlib.pyplot as plt, seaborn as sns
 from IPython.display import display
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
@@ -8,12 +7,10 @@ from sklearn.metrics import silhouette_score
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 
-# --------- basic settings ---------
 FILE    = "Evanston Restaurant Reviews.xlsx"     # change here if the name differs
 FIG_DIR = "figs"
 os.makedirs(FIG_DIR, exist_ok=True)
 
-# --------- 1. load & merge ---------
 restaurants = pd.read_excel(FILE, sheet_name="Restaurants")
 reviews     = pd.read_excel(FILE, sheet_name="Reviews")
 
@@ -23,7 +20,7 @@ df = reviews.merge(
      )
 print(f"[INFO] merged DataFrame shape: {df.shape}")
 
-# --------- Q1. missing-value audit ---------
+# missing-value audit 
 missing = df.isna().sum().sort_values(ascending=False)
 missing = missing[missing > 0]
 if missing.empty:
@@ -42,7 +39,7 @@ else:
     plt.savefig(f"{FIG_DIR}/missing_values.png", dpi=120)
     plt.close()
 
-# --------- Q2. distributions (histograms / bar charts) ---------
+# distributions 
 HIST_VARS = {
     "Cuisine": "cat",
     "Average Amount Spent": "cat",
@@ -68,7 +65,7 @@ for col, typ in HIST_VARS.items():
 
 print(f"[INFO] all distribution plots saved → {FIG_DIR}/")
 
-# --------- Q3. clustering grid search (KMeans / Agglo / DBSCAN) ---------
+# clustering grid search 
 FEATURES = [
     "Birth Year", "Weight (lb)", "Has Children?", "Marital Status",
     "Preferred Mode of Transport", "Average Amount Spent"
@@ -77,7 +74,7 @@ FEATURES = [
 cat_cols = [c for c in FEATURES if df[c].dtype == "O"]
 num_cols = list(set(FEATURES) - set(cat_cols))
 
-# OneHotEncoder – new & old scikit-learn compatibility
+# OneHotEncoder
 try:
     ohe = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
 except TypeError:          
@@ -99,7 +96,7 @@ X = prep.fit_transform(work[FEATURES])
 
 records = []
 
-# --- K-Means & Agglomerative clustering ---
+# K-Means & Agglomerative clustering
 for algo, ctor in [("kmeans", KMeans), ("agglo", AgglomerativeClustering)]:
     for k in range(2, 7):
         if algo == "kmeans":
@@ -117,7 +114,7 @@ for algo, ctor in [("kmeans", KMeans), ("agglo", AgglomerativeClustering)]:
             silhouette=round(sil, 3), avg_ratings=avg
         ))
 
-# --- DBSCAN parameter grid ---
+# DBSCAN parameter grid 
 for eps in (4, 6, 8, 10, 12):
     for ms in (3, 5, 8):
         db = DBSCAN(eps=eps, min_samples=ms).fit(X)
@@ -143,7 +140,7 @@ display(res)
 res.to_csv("cluster_scan_results.csv", index=False)
 print("Grid search finished – results saved to cluster_scan_results.csv")
 
-# --------- Profile Clusters for KMeans (k=2 and k=3) ---------
+# Profile Clusters for KMeans
 def profile_kmeans(X, df_work, k_list=[2, 3]):
     for k in k_list:
         print(f"\n=== KMeans clustering: k = {k} ===")
@@ -165,7 +162,6 @@ def profile_kmeans(X, df_work, k_list=[2, 3]):
         display(profile)
         profile.to_csv(f"profile_kmeans_k{k}.csv")
 
-# re-transform before calling
 X_for_kmeans = prep.transform(work[FEATURES])
 profile_kmeans(X_for_kmeans, work.copy())
 

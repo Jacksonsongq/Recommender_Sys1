@@ -30,7 +30,6 @@ This project explores four fundamental approaches to building a restaurant recom
 ---
 
 ## 📂 Project Structure
-## 📁 Project Structure
 
 Recommender_Sys1/
 ├── data/                      # Raw data files

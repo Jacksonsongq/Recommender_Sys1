@@ -1,16 +1,35 @@
-# Homework 2 – Restaurant Recommender Systems (Northwestern STAT 415)
+# 🍽️ Restaurant Recommender System – STAT 415 (Northwestern)
 
-A short, hands-on project that walks through **four classic approaches** to building a
-restaurant recommendation engine:
+This project explores four fundamental approaches to building a restaurant recommendation engine using real-world survey data from Evanston, IL.
 
-1. **Exploratory Data Analysis (EDA)** – understand the users & restaurants  
-2. **Popularity Matching** – “wisdom-of-the-crowd” baselines + empirical Bayes shrinkage  
-3. **Content-Based Filtering** – numeric/categorical embeddings & distance metrics  
-4. **Natural-Language Analysis** – _either_ Jaccard or TF-IDF similarity on menu text  
-
-The final deliverable is a **PDF report** (visuals + narrative, no code) and the
-accompanying **Python code** that generated those results.
+**Course**: STAT 415 – Machine Learning  
+**Deliverable**: PDF report + executable Python package (this repo)  
+**Language**: Python 3.10+  
+**Data**: `Evanston_Restaurant_Reviews.xlsx`
 
 ---
+
+## 📌 Approaches Implemented
+
+1. **Exploratory Data Analysis (EDA)**  
+   Understand user demographics, restaurant metadata, and rating distributions.  
+   → See: `src/eda.py`
+
+2. **Popularity-Based Recommendation**  
+   Includes average rating and empirical Bayes shrinkage (weighted by review count).  
+   → See: `src/shrinkage.py`, `src/recommender.py`
+
+3. **Content-Based Filtering**  
+   Recommend restaurants based on numeric & categorical embeddings (e.g., cuisine, cost, open hours).  
+   → See: `src/content_based.py`
+
+4. **Natural-Language TF-IDF Analysis**  
+   Compare restaurant descriptions using TF-IDF and cosine distance.  
+   → See: `src/tf_idf_similarity.py`
+
+---
+
+## 📂 Project Structure
+
 
 

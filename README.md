@@ -30,7 +30,22 @@ This project explores four fundamental approaches to building a restaurant recom
 ---
 
 ## 📂 Project Structure
-Recommender_Sys1/ ├── data/ ← Raw data files ├── figs/ ← Output visualizations ├── src/ ← Core Python modules │ ├── init.py │ ├── eda.py │ ├── shrinkage.py │ ├── recommender.py │ ├── content_based.py │ ├── tf_idf_similarity.py │ └── similarity_metrics.py ├── main.py ← Run full pipeline (for demo) ├── README.md ← This file
+## 📁 Project Structure
+
+Recommender_Sys1/
+├── data/                      # Raw data files
+│   └── Evanston_Restaurant_Reviews.xlsx
+├── figs/                      # Output visualizations
+├── src/                       # Core Python modules
+│   ├── __init__.py
+│   ├── eda.py
+│   ├── shrinkage.py
+│   ├── recommender.py
+│   ├── content_based.py
+│   ├── tf_idf_similarity.py
+│   └── similarity_metrics.py
+├── main.py        # Run full pipeline (for demo)
+├── README.md                  # Project documentation
 
 
 
